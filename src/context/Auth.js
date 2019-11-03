@@ -80,17 +80,6 @@ const AuthProvider = ({ children }) => {
                 type: 'LOGIN_SUCCESS',
                 payload: { user, idToken },
               })
-            } else {
-              firestore
-                .collection('metadata')
-                .doc(user.uid)
-                .onSnapshot(async () => {
-                  const idToken = await user.getIdToken(true)
-                  dispatch({
-                    type: 'LOGIN_SUCCESS',
-                    payload: { user, idToken },
-                  })
-                })
             }
           } else {
             dispatch({ type: 'LOGOUT' })
