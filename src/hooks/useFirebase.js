@@ -1,7 +1,7 @@
 import { h } from 'preact'
 import { useContext } from 'preact/hooks'
 
-import { FirebaseContext } from '../context/firebaseContext'
+import { FirebaseContext } from '../context/Firebase'
 
 const useFirebase = () => useContext(FirebaseContext)
 
