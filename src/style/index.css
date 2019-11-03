@@ -5,7 +5,17 @@
 
 :root {
   --bg-color: #222222;
+  --black: #111;
   --white: #fefefb;
+  --purple: #380B2D;
+  --light-purple: #C7B8C5;
+  --heading-font-color: var(--light-purple);
+
+  --purple-pink-gradient: linear-gradient(90deg, rgba(109,88,198,1) 0%, rgba(249,119,161,1) 100%);
+
+  --purple-gradient: linear-gradient(137.08deg, #230A11 -1.96%, #5D0D5F 97.8%);
+
+  --heading-font: 'Poppins', sans-serif;
 
   --header-height: 4rem;
 	
@@ -50,8 +60,19 @@ body {
 }
 
 :--heading {
-	font-weight: bold;
+  color: var(--heading-font-color);
+  font-family: var(--heading-font);
+  font-weight: bold;
+  letter-spacing: 0.01em;
   margin-block: 0;
+}
+
+h1 {
+  font-size: rem(64px);
+}
+
+h2 {
+  font-size: rem(36px)
 }
 
 p {
@@ -99,11 +120,48 @@ button,
   -webkit-appearance: button;
 }
 
+button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 #app {
   height: 100%;
-  margin-top: var(--header-height);
 
 	@media (--md-viewport) {
 		height: 100vh;
 	}
+}
+
+.show-auth-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+.show-auth-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 450ms, transform 300ms;
+}
+.show-auth-exit {
+  opacity: 0;
+  transform: translateX(100%);
+}
+.show-auth-exit-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 450ms, transform 300ms;
 }
