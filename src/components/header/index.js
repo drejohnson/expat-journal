@@ -19,10 +19,11 @@ const Header = () => {
   }, [isAuthenticating, isAuthenticated])
   return (
     <header class={style.header}>
-      <h1>Preact App</h1>
+      <span>Preact App</span>
       <nav>
         <ActiveLink href="/">Home</ActiveLink>
         <ActiveLink href="/posts">Posts</ActiveLink>
+        <ActiveLink href="/register">Register</ActiveLink>
         {!isAuthenticated ? (
           <button onClick={() => loginWithGoogle({ redirect: true })}>
             Sign in with Google
