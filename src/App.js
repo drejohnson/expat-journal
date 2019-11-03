@@ -1,15 +1,16 @@
 import { h } from 'preact'
-import { useEffect } from 'preact/hooks'
 import { Switch, Route } from 'wouter-preact'
 
 import { AuthProvider } from './context/Auth'
-import { FirebaseProvider } from './context/firebaseContext'
+import { FirebaseProvider } from './context/Firebase'
 import ApolloProvider from './apollo/ApolloProvider'
-import Header from './components/Header'
 
 // Code-splitting is automated for routes
+import PrivateRoute from './components/PrivateRoute'
 import Home from './routes/Home'
 import Posts from './routes/Posts'
+import Login from './routes/Login'
+import Register from './routes/Register'
 
 const App = () => {
   return (
@@ -17,13 +18,18 @@ const App = () => {
       <AuthProvider>
         <ApolloProvider>
           <div id="app">
-            <Header />
             <Switch>
-              <Route path="/">
+              <PrivateRoute path="/">
                 <Home />
-              </Route>
-              <Route path="/posts">
+              </PrivateRoute>
+              <PrivateRoute path="/posts">
                 <Posts />
+              </PrivateRoute>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/register">
+                <Register />
               </Route>
               <Route path="/:rest">
                 <center>
