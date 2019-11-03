@@ -1,0 +1,6 @@
+.socialAuth {
+  & h4 {
+    color: #666;
+    margin: 1rem 0;
+  }
+}

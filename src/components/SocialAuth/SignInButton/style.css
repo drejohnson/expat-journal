@@ -1,0 +1,52 @@
+.socialButton {
+  & button {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 14px;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    white-space: normal;
+    width: 100%;
+    border-width: 0;
+    border-radius: 500px;
+    padding: 0.75rem 2rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05), 0 0px 40px rgba(0, 0, 0, 0.08);
+    transition-property: background-color, border-color, color, box-shadow,
+      filter;
+    transition-duration: 0.3s;
+  
+    & img {
+      width: 24px;
+      height: 24px;
+      margin-right: 1rem;
+    }
+  
+    & span {
+      font-family: Roboto, sans-serif;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 0 12px;
+      color: white;
+    }
+  }
+}
+
+
+button.google {
+  background-color: white;
+}
+
+button.facebook {
+  background-color: #3b5998;
+}
+
+button.google > span {
+  color: #737373;
+}
+
+button.facebook > span {
+  color: #fff;
+}
