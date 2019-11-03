@@ -8,7 +8,7 @@ export default function ActiveLink(props) {
 
   return (
     <Link {...props}>
-      <a class={s}>{props.children}</a>
+      <a class={`${style.activeLink} ${s}`}>{props.children}</a>
     </Link>
   )
 }
