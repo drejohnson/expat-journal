@@ -1,7 +1,9 @@
 const postcssPresetEnv = require('postcss-preset-env')
+const postcssRem = require('postcss-rem')
 
 module.exports = {
   plugins: [
+    postcssRem(),
     postcssPresetEnv({
       preserve: false,
       features: {
