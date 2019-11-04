@@ -9,10 +9,10 @@ const corsHandler = cors({ origin: true })
 export const handleRegister = functions.https.onRequest(async (req, res) => {
   corsHandler(req, res, async () => {
     try {
-      const data = await createAccount(req)
-      res.status(200).send({ error: null, data })
+      const user = await createAccount(req)
+      res.status(200).send({ error: null, user })
     } catch (error) {
-      res.status(500).send({ error, data: null })
+      res.status(500).send({ error, user: null })
       throw new functions.https.HttpsError('failed-precondition', 'sync-failed')
     }
   })
