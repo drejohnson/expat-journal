@@ -10,8 +10,9 @@ const getClaims = (user: any) => ({
   }
 })
 
-export const createUser = async ({ email, password } : {email: string, password: string}) => {
+export const createUser = async ({ name, email, password } : {name: string, email: string, password: string}) => {
   const user = await app.auth().createUser({
+    displayName: name,
     email,
     password
   })

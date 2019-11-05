@@ -1,7 +1,8 @@
 export const ADD_USER =  `mutation($id: String, $email: String, $name: String) {
   insert_users(objects: [{
       id: $id,
-      email: $email
+      email: $email,
+      name: $name
     }]) {
       affected_rows
     }

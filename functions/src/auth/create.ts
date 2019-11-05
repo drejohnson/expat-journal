@@ -3,11 +3,12 @@ import client from '../graphql/client'
 import { ADD_USER } from '../graphql/mutations'
 
 export const createAccount = async (req: any) => {
-  const { email, password } = req.body
+  const { name, email, password } = req.body
   try {
-    const user = await createUser({ email, password })
+    const user = await createUser({ name, email, password })
     const hasuraUser = await client.request(ADD_USER, {
       id: user.uid,
+      name,
       email
     })
     return hasuraUser && user
