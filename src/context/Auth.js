@@ -1,5 +1,6 @@
 import { h, createContext } from 'preact'
 import { useEffect, useReducer } from 'preact/hooks'
+import axios from 'axios'
 
 import useFirebase from '../hooks/useFirebase'
 
@@ -16,12 +17,12 @@ const AuthProvider = ({ children }) => {
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case 'LOGIN_BEGIN':
+      case 'AUTH_BEGIN':
         return {
           ...state,
           isAuthenticating: true,
         }
-      case 'LOGIN_SUCCESS':
+      case 'AUTH_SUCCESS':
         localStorage.setItem('idToken', JSON.stringify(action.payload.idToken))
         localStorage.setItem('user', JSON.stringify(action.payload.user))
         return {
@@ -39,7 +40,14 @@ const AuthProvider = ({ children }) => {
           user: null,
           idToken: null,
         }
-      case 'LOGIN_ERR':
+      case 'AUTH_ERR':
+        return {
+          ...state,
+          isAuthenticated: false,
+          user: null,
+          idToken: null,
+          authError: action.payload,
+        }
       default:
         return state
     }
@@ -50,16 +58,51 @@ const AuthProvider = ({ children }) => {
   const { auth, providers, firestore } = useFirebase()
 
   const loginWithGoogle = ({ redirect = false }) => {
-    dispatch({ type: 'LOGIN_BEGIN' })
+    dispatch({ type: 'AUTH_BEGIN' })
     return redirect === true
       ? auth.signInWithRedirect(providers.google)
       : auth.signInWithPopup(providers.google)
   }
   const loginWithFacebook = ({ redirect = false }) => {
-    dispatch({ type: 'LOGIN_BEGIN' })
+    dispatch({ type: 'AUTH_BEGIN' })
     return redirect === true
       ? auth.signInWithRedirect(providers.facebook)
       : auth.signInWithPopup(providers.facebook)
+  }
+
+  const loginWithEmailAndPassword = async values => {
+    dispatch({ type: 'AUTH_BEGIN' })
+    try {
+      await auth.signInWithEmailAndPassword(values.email, values.password)
+    } catch (err) {
+      console.log(err)
+      dispatch({
+        type: 'AUTH_ERR',
+        payload: err.response,
+      })
+    }
+  }
+
+  const handleRegister = async values => {
+    try {
+      dispatch({ type: 'AUTH_BEGIN' })
+      const response = await axios
+        .post(
+          'https://us-central1-expat-journal.cloudfunctions.net/handleRegister',
+          { name: values.name, email: values.email, password: values.password },
+        )
+        .then(() =>
+          auth.signInWithEmailAndPassword(values.email, values.password),
+        )
+
+      return response.data
+    } catch (err) {
+      console.log(err)
+      dispatch({
+        type: 'AUTH_ERR',
+        payload: err.response,
+      })
+    }
   }
 
   const handleLogout = () => auth.signOut()
@@ -77,7 +120,7 @@ const AuthProvider = ({ children }) => {
 
             if (hasuraClaim) {
               dispatch({
-                type: 'LOGIN_SUCCESS',
+                type: 'AUTH_SUCCESS',
                 payload: { user, idToken },
               })
             }
@@ -105,6 +148,8 @@ const AuthProvider = ({ children }) => {
           ...state,
           loginWithGoogle,
           loginWithFacebook,
+          loginWithEmailAndPassword,
+          handleRegister,
           handleLogout,
         }}
       >
