@@ -4,7 +4,7 @@
 @custom-media --lg-viewport (min-width: 992px);
 
 :root {
-  --bg-color: #222222;
+  --bg-color: white;
   --black: #111;
   --white: #fefefb;
   --purple: #380B2D;
@@ -48,7 +48,7 @@ html {
 body {
 	font-size: 1rem;
 	line-height: 1.6;
-	color: var(--white);
+	color: var(--black);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -140,11 +140,7 @@ button {
 }
 
 #app {
-  height: 100%;
-
-	@media (--md-viewport) {
-		height: 100vh;
-	}
+  min-height: 100vh;
 }
 
 .show-auth-enter {
