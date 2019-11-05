@@ -6,35 +6,33 @@ import * as Yup from 'yup'
 
 import style from '../style.css'
 
+import useAuth from '../../../hooks/useAuth'
 import SocialAuth from '../../SocialAuth'
 
 const schema = Yup.object().shape({
-  // firstName: Yup.string().required(),
-  // lastName: Yup.string().required(),
   email: Yup.string()
     .email()
     .required(),
   password: Yup.string()
     .min(6, 'Password must be at least 6 characters')
     .required(),
-  // confirmPassword: Yup.string()
-  //   .oneOf([Yup.ref('password'), null], 'Passwords must match')
-  //   .required(),
 })
 
 const LoginForm = ({ setShowLogin }) => {
   const intialValues = {
-    // firstName: '',
-    // lastName: '',
     email: '',
+    password: '',
   }
   const { register, handleSubmit, errors } = useForm({
     validationSchema: schema,
   })
-  const [state, update] = useState(intialValues)
+  const [values, setValues] = useState(intialValues)
+  const { loginWithEmailAndPassword } = useAuth()
+
   const onSubmit = data => {
     console.log(data)
-    alert(JSON.stringify(data))
+    loginWithEmailAndPassword(data)
+    setValues(intialValues)
   }
 
   const handleClick = e => {
@@ -56,8 +54,7 @@ const LoginForm = ({ setShowLogin }) => {
         <div class={style.inputField}>
           <label htmlFor="email">Email</label>
           <input
-            onChange={e => update(e.target.value)}
-            defaultValue={intialValues.email}
+            value={values.email}
             name="email"
             type="email"
             ref={register}
@@ -67,7 +64,12 @@ const LoginForm = ({ setShowLogin }) => {
 
         <div class={style.inputField}>
           <label htmlFor="password">Password</label>
-          <input name="password" type="password" ref={register} />
+          <input
+            value={values.password}
+            name="password"
+            type="password"
+            ref={register}
+          />
           {errors.password && (
             <p class={style.error}>{errors.password.message}</p>
           )}

@@ -7,7 +7,6 @@ import useAuth from '../../hooks/useAuth'
 
 const Header = () => {
   const {
-    user,
     isAuthenticated,
     isAuthenticating,
     loginWithGoogle,
@@ -23,7 +22,6 @@ const Header = () => {
       <nav>
         <ActiveLink href="/">Home</ActiveLink>
         <ActiveLink href="/posts">Posts</ActiveLink>
-        <ActiveLink href="/register">Register</ActiveLink>
         {!isAuthenticated ? (
           <button onClick={() => loginWithGoogle({ redirect: true })}>
             Sign in with Google
